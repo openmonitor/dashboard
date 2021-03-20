@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Services from './Services';
+import Systems from './Systems';
 import Components from './Components';
 
 export default class FetchData extends Component{
@@ -7,14 +7,14 @@ export default class FetchData extends Component{
     state = {
         loading: true,
         components: null,
-        services: null
+        systems: null
     }
 
     async componentDidMount(){
         const url= "https://openmonitor.monitor-api-dev.zeekay.dev/";
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({components: data.components, services: data.services, loading: false});
+        this.setState({components: data.components, systems: data.systems, loading: false});
         //Object.keys(this.state.components).forEach(item => console.log(item));
     }
 
@@ -36,25 +36,49 @@ export default class FetchData extends Component{
                 </div>
             )
         }
+
+        
+
         var componentKeys = [];
         var componentValues = [];
         Object.keys(this.state.components).forEach(item => componentKeys.push(item));
         Object.values(this.state.components).forEach(item => componentValues.push(item));
-        console.log(componentKeys);
-        console.log(componentValues);
 
-        var components = []
+        var components = [];
         for( var i=0; i < componentKeys.length; i++){
             components.push(<Components key={componentKeys[i]} components={componentValues[i]}/>)
         }
-        console.log(components);
 
+        var systemKeys = [];
+        var systemValues = [];
+        Object.keys(this.state.systems).forEach(item => systemKeys.push(item));
+        Object.values(this.state.systems).forEach(item => systemValues.push(item));
 
-            return(
-                <div>
-                    {components}
-                </div>
-            )
+        var systems = [];
+        var systemComponents = [];
+        var singleComponents = [];
+        for( var j=0; j < systemKeys.length; j++){
+            for(var x=0; x < components.length; x++){
+                if(systemKeys[j] == components[x].props.components.system){
+                    systemComponents.push(components[x]);
+                }
+            }
+            systems.push(<Systems key={systemKeys[j]} systems={systemValues[j]} components={systemComponents}/>)
+        }
+        for (var y=0; y < components.length; y++){
+            if(components[y].props.components.system == undefined){
+                singleComponents.push(components[y]);
+            }
+        }
+        console.log(systems);
+        console.log(singleComponents);
+
+        return(
+            <div>
+                {systems}
+                {singleComponents}
+            </div>
+        )
         
     }
 
