@@ -4,4 +4,4 @@ ADD dashboard /dashboard/
 WORKDIR /dashboard
 
 RUN npm install
-ENTRYPOINT["npm", "run"]
+ENTRYPOINT npm run start
