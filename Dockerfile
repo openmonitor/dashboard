@@ -1,6 +1,6 @@
 FROM node:latest
 
-ADD dashboard /dashboard/
+ADD . /dashboard/
 WORKDIR /dashboard
 
 RUN npm install
