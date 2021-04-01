@@ -48,7 +48,8 @@ jobs:
         with:
           host: ${{ secrets.ENDPOINT }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY_OF_NETCUP }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSWD }}
           script: |
             sudo docker login https://ghcr.io -u zkdev --password ${{ secrets.ZK_PACKAGE }}
             sudo docker stop openmonitor-dashboard
