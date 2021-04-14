@@ -48,15 +48,14 @@ export default function FetchDataFunction(props) {
         Object.values(systems).forEach(item => systemValues.push(item));
 
         var systemsLocal = [];
-        var systemComponents = [];
         var singleComponents = [];
         for( var j=0; j < systemKeys.length; j++){
+            var systemComponents = [];
             for(var x=0; x < componentsLocal.length; x++){
                 if(systems[j].system === componentsLocal[x].props.components.system){
                     systemComponents.push(componentsLocal[x]);
                 }
             }
-            
             systemsLocal.push(<Systems key={systemKeys[j]} systems={systemValues[j]} components={systemComponents}/>)
         }
         for (var y=0; y < componentsLocal.length; y++){
