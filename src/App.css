@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #505050;
+  height: 100vh;
 }
 
 .App-logo {
@@ -31,6 +33,14 @@
   height: 100%;
 }*/
 
+.tooltip {
+  background: #282c34;
+  color: whitesmoke;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 15px 30px 40px 5px rgba(0, 0, 0, 0.5);
+}
 
 .App-link {
   color: #61dafb;

@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import FetchData from './components/FetchData';
+import FetchDataFunction from './components/FetchDataFunction'
 
 function App() {
 
@@ -9,8 +10,8 @@ function App() {
       <header className="App-header">
         <h1> Dashboard </h1>
       </header>
-      <div>
-        <FetchData />
+      <div >
+        <FetchDataFunction />
       </div>
     </div>
 

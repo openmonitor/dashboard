@@ -10,12 +10,18 @@ export default class FetchData extends Component{
         systems: null
     }
 
-    async componentDidMount(){
-        const url= "https://openmonitor.monitor-api-dev.zeekay.dev/";
+    componentDidMount(){
+        this.fetchData();
+    }
+
+    async fetchData(){
+        const url= "https://openmonitor.monitor-api.zeekay.dev";
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({components: data.components, systems: data.systems, loading: false});
-        //Object.keys(this.state.components).forEach(item => console.log(item));
+        if(response.ok){
+            this.setState({components: data.components, systems: data.systems, loading: false});
+            Object.keys(this.state.components).forEach(item => console.log(item));
+        }
     }
 
 
@@ -59,14 +65,16 @@ export default class FetchData extends Component{
         var singleComponents = [];
         for( var j=0; j < systemKeys.length; j++){
             for(var x=0; x < components.length; x++){
-                if(systemKeys[j] == components[x].props.components.system){
+                if(systemKeys[j] === components[x].props.components.system){
                     systemComponents.push(components[x]);
+                    console.log(systemComponents[x])
                 }
             }
+            
             systems.push(<Systems key={systemKeys[j]} systems={systemValues[j]} components={systemComponents}/>)
         }
         for (var y=0; y < components.length; y++){
-            if(components[y].props.components.system == undefined){
+            if(components[y].props.components.system === undefined){
                 singleComponents.push(components[y]);
             }
         }
@@ -74,7 +82,7 @@ export default class FetchData extends Component{
         console.log(singleComponents);
 
         return(
-            <div>
+            <div style={{/*, backgroundColor: "#505050"*/}}>
                 {systems}
                 {singleComponents}
             </div>
