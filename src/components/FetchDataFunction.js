@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Systems from './Systems';
 import Components from './Components';
 
@@ -9,22 +9,27 @@ export default function FetchDataFunction(props) {
     const[components, setComponents] = useState([]);
     const[systems, setSystems] = useState([]);
     const[items, setItems] = useState([]);
+    const ref = useRef(true);
 
     useEffect(() => {
-        fetch("https://openmonitor.monitor-api.zeekay.dev")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setComponents(result.components);
-                    setSystems(result.systems);
-                    setItems(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+        setTimeout(() => {
+            console.log(new Date().toLocaleString().replace(',','') + ': fetching')
+            fetch("https://openmonitor.monitor-api.zeekay.dev")
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        setIsLoaded(true);
+                        setComponents(result.components);
+                        setSystems(result.systems);
+                        setItems(result);
+                    },
+                    (error) => {
+                        setIsLoaded(true);
+                        setError(error);
+                    }
+                )
+            ref.current = false;
+        }, ((ref.current === true) ? 0 : 10000));
     }, [items])
 
     if(error){

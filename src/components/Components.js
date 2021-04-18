@@ -31,6 +31,7 @@ export default class Instances extends Component{
             for(var j=0; j < comments.length; j++){
                 if(comments[j].startFrame <= frames[i].id  && frames[i].id <= comments[j].endFrame){
                     frames[i].comment = comments[j].commentText
+                    frames[i].commentId = comments[j].comment
                 }
             }
         }
@@ -116,7 +117,9 @@ function CustomTooltip({active, payload}) {
                 <p>{payload[0].payload.timestamp}</p>
                 <p>ResponseTime: {payload[0].payload.responseTime}ms</p>
                 <p>CPU usage: {payload[0].payload.cpu}%</p>
-                <p>{payload[0].payload.comment}</p>
+                <p>Comment: {payload[0].payload.comment}</p>
+                <p>Comment ID: {payload[0].payload.commentId}</p>
+                <p>Frame ID: {payload[0].payload.id}</p>
             </div>
        ) 
     }
