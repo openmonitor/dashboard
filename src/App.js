@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1 style={{marginBottom: "5px"}}> Dashboard </h1>
-        <a class="Header-link" href="https://openmonitor.zeekay.dev" >&gt;&gt;&gt;   Visit us on GitHub!   &lt;&lt;&lt;</a>
+        <a className="Header-link" href="https://openmonitor.zeekay.dev" >&gt;&gt;&gt;   Visit us on GitHub!   &lt;&lt;&lt;</a>
         
       </header>
       <div >

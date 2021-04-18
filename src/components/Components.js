@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip, ReferenceLine, ScatterChart, Scatter, Cell } from 'recharts';
 import '../App.css';
 
+const renderColorfulLegendText = (value) => {
+    const { color } = "white";
+    console.log('formatter')
+
+    return <span style={{ color }}>{value}</span>;
+};
+
 export default class Instances extends Component{
 
     getColor(frame){
@@ -93,7 +100,7 @@ export default class Instances extends Component{
                             <Tooltip content={<CustomTooltip />} />
                             <ReferenceLine y={this.props.components.timeout} label={{value:"Timeout", position:"bottom", fill: 'red'}} stroke="red" strokeDasharray="3 3" />
                             <ReferenceLine y={this.props.components.expectedTime} stroke="lightblue" label={{value:"Expected Time (" + this.props.components.expectedTime + "ms)", position:"bottom", fill: 'lightblue'}} strokeDasharray="3 3" />
-                            <Legend />
+                            <Legend formatter={renderColorfulLegendText}/>
                             <Scatter name="ResponseTime" data={frames} fill="url(#gradient)">
                                 {frames.map((entry, index) => (
                                     <Cell key={`cell-${frames[index].id}`} fill={this.getColor(frames[index])} />
@@ -112,14 +119,19 @@ export default class Instances extends Component{
 
 function CustomTooltip({active, payload}) {
     if(active){
+       const timestamp = new Date(payload[0].payload.timestamp).toLocaleString()
        return(
             <div className="tooltip">
-                <p>{payload[0].payload.timestamp}</p>
-                <p>ResponseTime: {payload[0].payload.responseTime}ms</p>
-                <p>CPU usage: {payload[0].payload.cpu}%</p>
-                <p>Comment: {payload[0].payload.comment}</p>
-                <p>Comment ID: {payload[0].payload.commentId}</p>
-                <p>Frame ID: {payload[0].payload.id}</p>
+                <p>{timestamp}</p>
+                <p className={"tooltip-entry"}>ResponseTime: {payload[0].payload.responseTime}ms</p>
+                <p className={"tooltip-entry"}>CPU usage: {payload[0].payload.cpu}%</p>
+                {payload[0].payload.comment !== undefined &&
+                    <p className={"tooltip-entry"}>Comment: {payload[0].payload.comment}</p>
+                }
+                {payload[0].payload.comment !== undefined &&
+                    <p className={"tooltip-entry"}>Comment ID: {payload[0].payload.commentId}</p>
+                }
+                <p className={"tooltip-entry"}>Frame ID: {payload[0].payload.id}</p>
             </div>
        ) 
     }
