@@ -27,6 +27,7 @@ export default class Instances extends Component{
         const frames = this.props.components.frames;
         const comments = this.props.components.comments;
         for(var i=0; i < frames.length; i++){
+            frames[i].timeout = this.props.components.timeout;
             if(frames[i].responseTime === null || frames[i].responseTime >= this.props.components.timeout){
                 frames[i].responseTime = this.props.components.timeout;
             }
@@ -120,10 +121,16 @@ export default class Instances extends Component{
 function CustomTooltip({active, payload}) {
     if(active){
        const timestamp = new Date(payload[0].payload.timestamp).toLocaleString()
+       let responseTime = payload[0].payload.responseTime
+       if (responseTime === payload[0].payload.timeout) {
+           responseTime = "Timeout"
+       } else {
+           responseTime = responseTime + "ms"
+       }
        return(
             <div className="tooltip">
                 <p>{timestamp}</p>
-                <p className={"tooltip-entry"}>ResponseTime: {payload[0].payload.responseTime}ms</p>
+                <p className={"tooltip-entry"}>ResponseTime: {responseTime}</p>
                 <p className={"tooltip-entry"}>CPU usage: {payload[0].payload.cpu}%</p>
                 {payload[0].payload.comment !== undefined &&
                     <p className={"tooltip-entry"}>Comment: {payload[0].payload.comment}</p>
